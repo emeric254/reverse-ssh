@@ -48,7 +48,7 @@ $EDITOR .ssh/authorized_keys
 # Now go back to computer "B" commands
 
 # Try to connect to computer "B" using the tunnel, this will ask the password of computer "B" user
-ssh -p 10000 my_user_B@localhost
+ssh -p 30000 my_user_B@localhost
 ```
 
 ### Computer "B"
