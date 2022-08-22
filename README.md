@@ -36,13 +36,48 @@ Computer "A" is now able to connect to computer "B" through this _tunnel_.
 ### Computer "A"
 
 ```shell
-systemctl enable --now sshd  # make sure ssh is active
 
+# Make sure ssh server is active
+systemctl enable --now sshd
+
+# Now go to computer "B" commands
+
+# Paste the content of the computer "B" public key here
+$EDITOR .ssh/authorized_keys
+
+# Now go back to computer "B" commands
+
+# Try to connect to computer "B" using the tunnel, this will ask the password of computer "B" user
+ssh -p 10000 my_user_B@localhost
 ```
 
 ### Computer "B"
 
 ```shell
-systemctl enable --now sshd  # make sure ssh is active
 
+# Make sure ssh server is active
+systemctl enable --now sshd
+
+# Generate a SSH key
+ssh-keygen
+
+# Copy the public key to computer "A"
+cat .ssh/id_rsa.pub
+
+# Now go to computer "A" commands
+
+# Try to connect to computer "A", this should not ask for any password as the key will be used
+ssh my_user@my_domain.com
+
+# Put autossh.service here
+mkdir -p .config/systemd/user
+$EDITOR .config/systemd/user/autossh.service
+
+# Enable and start this service
+systemctl --user enable --now autossh
+
+# Verify the status of the service
+systemctl --user status autossh
+
+# Now go back to Computer "A" commands
 ```
