@@ -1,6 +1,7 @@
 [Unit]
 Description=Keeps an SSH tunnel to 'my_domain.com' open
 After=network-online.target
+Wants=network-online.target
 
 [Service]
 
