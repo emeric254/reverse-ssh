@@ -1,7 +1,7 @@
 [Unit]
 Description=Keeps an SSH tunnel to 'my_domain.com' open
-After=network-online.target
-Wants=network-online.target
+After=network-online.target  # start this service after "network-online"
+Wants=network-online.target  # "network-online" is a dependency/mandatory for this service
 
 [Service]
 
@@ -18,8 +18,8 @@ Wants=network-online.target
 
 ExecStart=/usr/bin/autossh -M 0 -N -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3" -p 10000 -l my_user my_domain.com -R 30000:127.0.0.1:22
 
-RestartSec=120
-Restart=always
+RestartSec=120  # if this service crash, it will be restarted after 2 minutes
+Restart=always  # if this service crash always restart
 
 [Install]
 WantedBy=default.target
